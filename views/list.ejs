@@ -1,11 +1,43 @@
 <!DOCTYPE html>
-	<html lang="kr" dir="ltr">
-	<head>
-		<meta charset="utf-8">
-		<title>할일 목록</title>
-	</head>
-	<body>
-		<h1>It's a <%= kindOfDay %>!</h1>
-		
-	</body>
+<html lang="kr" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title>할일 목록</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+	<div class="box" id="heading">
+		<h1> <%= listTitle %> </h1>
+	</div>
+
+	<div class="box">
+
+			<!-- ejs 에서 자바스크립트 문법을 사용할경우에는 <% %> -->
+			<!-- ejs 에서 값을 사용할 때는 <%= %> 사용할것!!! -->
+			<% newListItems.forEach(function(element){ %>
+			<div class="item">
+				<input type="checkbox">
+				<p> <%= element %></p>
+			</div>
+			<% }); %>
+			<!-- <% for(var i=0; i<newListItems.length; i++) { %>
+				<li><%= newListItems[i] %></li>
+				<% } %> -->
+
+		<form class="item" action="/" method="post">
+			<input type="text" name="newItem" placeholder="할 일 추가" autocomplete="off">
+			<button type="submit" name="list" value= <%= listTitle %>>+</button>
+		</form>
+	</div>
+
+
+
+
+
+
+</body>
+
 </html>
