@@ -2,6 +2,10 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+// date.js 모듈 임포트 -> 직접 만든것이기 떄문에 경로를 지정해줘야한다.
+const date = require(__dirname + "/date.js");
+// date() 를 함으로써 date.js 에서 추출된 함수를 돌린다.
+// console.log(date());
 
 const app = express();
 
@@ -34,46 +38,9 @@ app.get("/", function(req, res){
 	// res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
 
 	// res.writeHead(200, {'Content-Type':'text/plain; charset=utf-8'});
-	let today = new Date();
-	let currentDay = today.getDay();
-	let day = "";
 
-	switch (currentDay){
-		case 0:
-			day = "Sunday";
-		break;
-		case 1:
-			day = "Monday";
-		break;
-		case 2:
-			day = "Tuesday";
-		break;
-		case 3:
-			day = "Wendsday";
-		break;
-		case 4:
-			day = "Thursday";
-		break;
-		case 5:
-			day = "Friday";
-		break;
-		case 6:
-			day = "Saturday";
-		break;
-
-		default:
-		console.log("Error: current day is equal to: " + currentDay);
-	}
-
-	let options = {
-		weekday: "long",
-		day: "numeric",
-		month: "long"
-	};
-
-	day = today.toLocaleDateString("ko-KR", options);
-
-
+	// TODO: 현재 날짜 가져오기
+ 	// 참조: https://nodejs.org/dist/latest-v12.x/docs/api/modules.html#modules_modules
 
 	// if(currentDay === 6 || currentDay === 0){
 	// 	day = "Weekend";
@@ -89,7 +56,8 @@ app.get("/", function(req, res){
 
 	// }
 
-
+// date() 를 함으로써 date.js 에서 추출된 함수를 돌린다.
+	let day = date.getDate();
 
 	// ejs 다큐 참조
 		// https://github.com/mde/ejs/wiki/Using-EJS-with-Express
@@ -111,10 +79,10 @@ app.post("/",function(req, res){
 	let item = req.body.newItem;
 
 	// name="Work" 이면
-	if(req.body.list === "Work"){
+	if(req.body.list === "작업"){
 		// work list 배열에 새항목 추가
 		workItems.push(item);
-		// work route 로 새로고침! 
+		// work route 로 새로고침!
 		res.redirect("/work");
 	} else {
 		// 아이템 배열에 입력된 아이템을 넣는다.
@@ -132,7 +100,7 @@ app.post("/",function(req, res){
 	Work Route
 */
 app.get("/work", function(req, res){
-	res.render("list", {listTitle: "Work List", newListItems: workItems});
+	res.render("list", {listTitle: "작업 목록", newListItems: workItems});
 });
 
 app.post("/work", function(req, res){
@@ -142,7 +110,13 @@ app.post("/work", function(req, res){
 	res.redirect("/work");
 });
 
-
+/*
+	About Route
+*/
+app.get("/about", function(req, res){
+	// render.ejs 파일을 랜더링한다. -> 즉 해당 파일을 연다. 보여준다.
+	res.render("about");
+});
 
 
 
